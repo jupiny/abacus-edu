@@ -4,8 +4,8 @@ from .models import Video
 
 
 class VideoAdmin(admin.ModelAdmin):
-    fields = ('title', 'writer', 'youtube_id', 'get_youtube_original_url_html_tag',)
-    readonly_fields = ('get_youtube_original_url_html_tag',)
+    fields = ('title', 'writer', 'youtube_id', 'get_youtube_original_url_html_tag', 'get_youtube_embed_url_html_tag',)
+    readonly_fields = ('get_youtube_original_url_html_tag', 'get_youtube_embed_url_html_tag',)
     list_display = ('title', 'writer', 'get_youtube_original_url_html_tag',)
     search_fields = ['title', ]
 

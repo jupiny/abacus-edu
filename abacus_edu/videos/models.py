@@ -30,6 +30,19 @@ class Video(models.Model):
         )
     get_youtube_original_url_html_tag.short_description = "유투브 URL"
 
+    @property
+    def get_youtube_embed_url(self):
+        return "https://www.youtube.com/embed/{youtube_id}".format(
+            youtube_id=self.youtube_id,
+        )
+
+    def get_youtube_embed_url_html_tag(self):
+        return format_html(
+            "<iframe width='560' height='315' src='{}' frameborder='0' allowfullscreen></iframe>",
+            self.get_youtube_embed_url,
+        )
+    get_youtube_embed_url_html_tag.short_description = "유투브 영상"
+
     class Meta:
         verbose_name = "Video"
         verbose_name_plural = "Video"
