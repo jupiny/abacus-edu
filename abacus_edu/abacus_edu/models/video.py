@@ -3,6 +3,11 @@ from django.utils.html import format_html
 
 
 class Video(models.Model):
+    category = models.ForeignKey(
+        'Category',
+        on_delete=models.CASCADE,
+    )
+
     title = models.CharField(
         max_length=50,
         verbose_name="제목",
