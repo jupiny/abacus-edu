@@ -33,5 +33,17 @@
     </div>
   </div>
   {% endif %}
+  <textarea name="ir1" id="ir1" rows="10" cols="100"></textarea>
 </fieldset>
+<script type="text/javascript" src="{% static "js/HuskyEZCreator.js" %}" charset="utf-8"></script>
+
+<script type="text/javascript">
+var oEditors = [];
+nhn.husky.EZCreator.createInIFrame({
+  oAppRef: oEditors,
+  elPlaceHolder: "ir1",
+  sSkinURI: "{% static "SmartEditor2Skin.html" %}",
+  fCreator: "createSEditor2"
+});
+</script>
 {% endblock %}
