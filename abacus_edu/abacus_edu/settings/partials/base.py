@@ -28,7 +28,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'abacus_edu',
-    'videos',
 ]
 
 MIDDLEWARE_CLASSES = [
