@@ -33,8 +33,13 @@
     </div>
   </div>
   {% endif %}
-  <textarea name="ir1" id="ir1" rows="10" cols="100"></textarea>
+  <div class="form-row field-description">
+      <textarea name="ir1" id="ir1" rows="20" cols="100">{{ original.description }}</textarea>
+  </div>
 </fieldset>
+{% endblock %}
+{% block admin_change_form_document_ready %}
+{{ block.super }}
 <script type="text/javascript" src="{% static "js/HuskyEZCreator.js" %}" charset="utf-8"></script>
 
 <script type="text/javascript">

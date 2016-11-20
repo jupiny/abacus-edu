@@ -20,6 +20,7 @@ class Video(models.Model):
         max_length=40,
         verbose_name="유튜브 ID",
     )
+    description = models.TextField(blank=True)
 
     def __str__(self):
         return self.title
