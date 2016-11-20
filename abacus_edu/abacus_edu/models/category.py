@@ -6,3 +6,6 @@ class Category(models.Model):
         max_length=20,
         verbose_name="제목",
     )
+
+    def __str__(self):
+        return self.title

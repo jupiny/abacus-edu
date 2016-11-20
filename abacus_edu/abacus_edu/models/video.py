@@ -21,6 +21,9 @@ class Video(models.Model):
         verbose_name="유튜브 ID",
     )
 
+    def __str__(self):
+        return self.title
+
     @property
     def get_youtube_original_url(self):
         return "https://www.youtube.com/watch?v={youtube_id}".format(
