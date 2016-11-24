@@ -6,6 +6,7 @@ class Video(models.Model):
     category = models.ForeignKey(
         'Category',
         on_delete=models.CASCADE,
+        verbose_name="카테고리",
     )
 
     title = models.CharField(
