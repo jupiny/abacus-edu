@@ -19,7 +19,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 class ApplicationAdmin(admin.ModelAdmin):
-    list_display = ('app_name',)
+    list_display = ('app_name', 'slug',)
     search_fields = ['app_name', ]
 
 admin.site.unregister(User)
