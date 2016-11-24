@@ -1,40 +1,26 @@
 {% extends "admin/change_form.html" %}
 {% load staticfiles %}
 {% block field_sets %}
+{{ block.super }}
 <fieldset class="module aligned ">
-  <div class="form-row field-title">
-    <div>
-      <label class="required" for="id_title">제목:</label>
-      <input class="vTextField" id="id_title" maxlength="50" name="title" type="text" value="{{ original.title }}" />
-    </div> </div>
-  <div class="form-row field-writer">
-    <div>
-      <label class="required" for="id_writer">작성자:</label>
-      <input class="vTextField" id="id_writer" maxlength="30" name="writer" type="text" value="{{ original.writer }}" />
+  {% if original.youtube_id %}
+    <div class="form-row">
+      <div>
+        <label class="required" for="id_get_youtube_embed_url_html_tag">유튜브 URL:</label>
+        {{ original.get_youtube_original_url_html_tag }}
+      </div>
     </div>
-  </div>
-  <div class="form-row field-youtube_id">
-    <div>
-      <label class="required" for="id_youtube_id">유튜브 ID:</label>
-      <input class="vTextField" id="id_youtube_id" maxlength="40" name="youtube_id" type="text" value="{{ original.youtube_id }}" />
+    <div class="form-row">
+      <div>
+        <label class="required" for="id_get_youtube_embed_url_html_tag">유튜브 영상:</label>
+        {{ original.get_youtube_embed_url_html_tag }}
+      </div>
     </div>
-  </div>
-  {% if original.youtube_id %} 
-  <div class="form-row field-get_youtube_original_url_html_tag">
-    <div>
-      <label>유투브 URL:</label>
-      <p><a href='{{ original.get_youtube_original_url }}' target='_blank'>{{ original.get_youtube_original_url }}</a></p>
-    </div>
-  </div>
-  <div class="form-row field-get_youtube_embed_url_html_tag">
-    <div>
-      <label>유투브 영상:</label>
-      <p><iframe width='560' height='315' src='{{ original.get_youtube_embed_url }}' frameborder='0' allowfullscreen></iframe></p>
-    </div>
-  </div>
   {% endif %}
-  <div class="form-row field-description">
-      <textarea name="ir1" id="ir1" rows="20" cols="100">{{ original.description }}</textarea>
+  <div class="form-row">
+    <div>
+      <textarea name="description" id="ir1" rows="25" cols="150">{{ original.description }}</textarea>
+    </div>
   </div>
 </fieldset>
 {% endblock %}
@@ -42,13 +28,31 @@
 {{ block.super }}
 <script type="text/javascript" src="{% static "js/HuskyEZCreator.js" %}" charset="utf-8"></script>
 
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
 <script type="text/javascript">
-var oEditors = [];
-nhn.husky.EZCreator.createInIFrame({
-  oAppRef: oEditors,
-  elPlaceHolder: "ir1",
-  sSkinURI: "{% static "SmartEditor2Skin.html" %}",
-  fCreator: "createSEditor2"
+$( document ).ready(function() {
+  // 기본적으로 장고 어드민에서 제공하는 textarea 필드 숨기기
+  $(".field-description").hide();
+  var oEditors = [];
+  nhn.husky.EZCreator.createInIFrame({
+    oAppRef: oEditors,
+    elPlaceHolder: "ir1",
+    sSkinURI: "{% static "SmartEditor2Skin.html" %}",
+    fCreator: "createSEditor2"
+  });
+  $(":submit").click(function() {
+    // 에디터의 내용이 textarea에 적용된다.
+    oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
+ 
+    // 에디터의 내용에 대한 값 검증은 이곳에서
+    // document.getElementById("ir1").value를 이용해서 처리한다.
+ 
+    try {
+        $("form")[0].submit();
+    } catch(e) {}
+  });
 });
 </script>
 {% endblock %}

@@ -9,6 +9,7 @@ from .models import Category
 class VideoAdmin(admin.ModelAdmin):
     list_display = ('title', 'writer', 'get_youtube_original_url_html_tag',)
     search_fields = ['title', ]
+    fields = ('title', 'writer', 'youtube_id', 'description',)
 
 
 class CategoryAdmin(admin.ModelAdmin):
