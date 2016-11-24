@@ -9,3 +9,7 @@ class Category(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        verbose_name = "Category"
+        verbose_name_plural = "Category"
