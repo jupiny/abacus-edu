@@ -53,6 +53,12 @@ class Video(models.Model):
         )
     get_youtube_embed_url_html_tag.short_description = "유투브 영상"
 
+    @property
+    def get_youtube_thumbnail_image_url(self):
+        return "https://i.ytimg.com/vi/{youtube_id}/hqdefault.jpg".format(
+            youtube_id=self.youtube_id,
+        )
+
     class Meta:
         verbose_name = "Video"
         verbose_name_plural = "Video"
