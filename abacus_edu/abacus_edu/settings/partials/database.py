@@ -18,5 +18,14 @@ from .base import BASE_DIR
 # dj-database-url
 # https://github.com/kennethreitz/dj-database-url
 
-DATABASES = {}
-DATABASES['default'] = dj_database_url.config(default=os.environ.get("DATABASE_URL"))
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
