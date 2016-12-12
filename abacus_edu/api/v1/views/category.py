@@ -10,5 +10,5 @@ class CategoryListAPIView(ListAPIView):
     serializer_class = CategoryModelSerializer
 
     def get_queryset(self):
-        application = get_object_or_404(Application, slug=self.kwargs.get('slug'))
+        application = get_object_or_404(Application, slug=self.kwargs.get('application_slug'))
         return application.category_set.all()
