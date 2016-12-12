@@ -1,3 +1,5 @@
+from django.shortcuts import get_object_or_404
+
 from rest_framework.generics import ListAPIView
 
 from abacus_edu.models import Application
@@ -8,5 +10,5 @@ class CategoryListAPIView(ListAPIView):
     serializer_class = CategoryModelSerializer
 
     def get_queryset(self):
-        application = Application.objects.get(slug=self.kwargs.get('slug'))
+        application = get_object_or_404(Application, slug=self.kwargs.get('slug'))
         return application.category_set.all()
