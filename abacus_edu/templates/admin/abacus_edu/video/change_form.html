@@ -1,0 +1,58 @@
+{% extends "admin/change_form.html" %}
+{% load staticfiles %}
+{% block field_sets %}
+{{ block.super }}
+<fieldset class="module aligned ">
+  {% if original.youtube_id %}
+    <div class="form-row">
+      <div>
+        <label class="required" for="id_get_youtube_embed_url_html_tag">유튜브 URL:</label>
+        {{ original.get_youtube_original_url_html_tag }}
+      </div>
+    </div>
+    <div class="form-row">
+      <div>
+        <label class="required" for="id_get_youtube_embed_url_html_tag">유튜브 영상:</label>
+        {{ original.get_youtube_embed_url_html_tag }}
+      </div>
+    </div>
+  {% endif %}
+  <div class="form-row">
+    <div>
+      <textarea name="description" id="ir1" rows="25" cols="150">{{ original.description }}</textarea>
+    </div>
+  </div>
+</fieldset>
+{% endblock %}
+{% block admin_change_form_document_ready %}
+{{ block.super }}
+<script type="text/javascript" src="{% static "js/HuskyEZCreator.js" %}" charset="utf-8"></script>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+$( document ).ready(function() {
+  // 기본적으로 장고 어드민에서 제공하는 textarea 필드 숨기기
+  $(".field-description").hide();
+  var oEditors = [];
+  nhn.husky.EZCreator.createInIFrame({
+    oAppRef: oEditors,
+    elPlaceHolder: "ir1",
+    sSkinURI: "{% static "SmartEditor2Skin.html" %}",
+    fCreator: "createSEditor2"
+  });
+  $(":submit").click(function() {
+    // 에디터의 내용이 textarea에 적용된다.
+    oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
+ 
+    // 에디터의 내용에 대한 값 검증은 이곳에서
+    // document.getElementById("ir1").value를 이용해서 처리한다.
+ 
+    try {
+        $("form")[0].submit();
+    } catch(e) {}
+  });
+});
+</script>
+{% endblock %}
