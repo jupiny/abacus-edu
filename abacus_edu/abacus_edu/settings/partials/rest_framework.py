@@ -1,3 +1,10 @@
+import datetime
+
+from django.conf import settings
+
+from .base import SECRET_KEY
+
+
 REST_FRAMEWORK = {
     # Pagination
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
@@ -30,7 +37,7 @@ JWT_AUTH = {
     'JWT_RESPONSE_PAYLOAD_HANDLER':
     'rest_framework_jwt.utils.jwt_response_payload_handler',
 
-    'JWT_SECRET_KEY': settings.SECRET_KEY,
+    'JWT_SECRET_KEY': SECRET_KEY,
     'JWT_PUBLIC_KEY': None,
     'JWT_PRIVATE_KEY': None,
     'JWT_ALGORITHM': 'HS256',
