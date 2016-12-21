@@ -14,4 +14,7 @@ urlpatterns = [
     url(r'^(?P<application_slug>\w+)/categories/(?P<category_id>\d+)/videos/(?P<video_id>\d+)/$',
         VideoDetailAPIView.as_view(),
         name="video-detail"),
+    url(r'^(?P<application_slug>\w+)/recommended-videos/$',
+        RecommendedVideoListAPIView.as_view(),
+        name="recommended-video-list"),
 ]
