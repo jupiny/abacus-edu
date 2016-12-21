@@ -15,6 +15,10 @@ class Category(models.Model):
     def __str__(self):
         return self.title
 
+    @property
+    def video_count(self):
+        return self.video_set.count()
+
     class Meta:
         verbose_name = "Category"
         verbose_name_plural = "Category"
