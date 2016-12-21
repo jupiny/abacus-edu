@@ -23,3 +23,11 @@ class VideoDetailAPIView(RetrieveAPIView):
         category = get_object_or_404(Category, pk=self.kwargs.get('category_id'))
         video = get_object_or_404(Video, pk=self.kwargs.get('video_id'))
         return video
+
+
+class RecommendedVideoListAPIView(ListAPIView):
+    serializer_class = VideoModelSerializer
+
+    def get_queryset(self):
+        application = get_object_or_404(Application, slug=self.kwargs.get('application_slug'))
+        return Video.objects.filter(category__application=application, is_recommended=True)

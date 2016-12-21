@@ -6,4 +6,4 @@ from abacus_edu.models import Category
 class CategoryModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ('id', 'title',)
+        fields = ('id', 'title', 'video_count', 'representative_image_url',)

@@ -9,9 +9,9 @@ from .filters import DropdownFilter
 
 
 class VideoAdmin(admin.ModelAdmin):
-    list_display = ('title', 'writer', 'get_youtube_original_url_html_tag',)
+    list_display = ('title', 'writer', 'get_youtube_original_url_html_tag', 'is_recommended',)
     search_fields = ['title', ]
-    fields = ('category', 'title', 'writer', 'youtube_id', 'description',)
+    fields = ('category', 'title', 'writer', 'youtube_id', 'description', 'is_recommended',)
     list_filter = (
         ('category__title', DropdownFilter),
         ('category__application__app_name', DropdownFilter),
