@@ -22,6 +22,10 @@ class Video(models.Model):
         verbose_name="유튜브 ID",
     )
     description = models.TextField(blank=True)
+    is_recommended = models.BooleanField(
+        default=False,
+        verbose_name="추천여부",
+    )
 
     def __str__(self):
         return self.title
