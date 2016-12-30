@@ -35,7 +35,7 @@ class RecommendedVideoListAPIView(ListAPIView):
         return Video.objects.filter(category__application=application, is_recommended=True)
 
 
-class AutoplayVideoListAPIView(ListAPIView):
+class VideoYoutubeIDListAPIView(ListAPIView):
     serializer_class = VideoYoutubeIDSerializer
 
     def get_queryset(self):
