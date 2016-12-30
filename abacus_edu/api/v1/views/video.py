@@ -4,10 +4,12 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView
 
 from abacus_edu.models import Application, Category, Video
 from api.v1.serializers.video import VideoModelSerializer, VideoYoutubeIDSerializer
+from api.pagination import StandardResultsSetPagination
 
 
 class VideoListAPIView(ListAPIView):
     serializer_class = VideoModelSerializer
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         application = get_object_or_404(Application, slug=self.kwargs.get('application_slug'))
