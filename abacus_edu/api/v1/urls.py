@@ -17,7 +17,7 @@ urlpatterns = [
     url(r'^(?P<application_slug>\w+)/recommended-videos/$',
         RecommendedVideoListAPIView.as_view(),
         name="recommended-video-list"),
-    url(r'^(?P<application_slug>\w+)/categories/(?P<category_id>\d+)/autoplay-videos/$',
-        AutoplayVideoListAPIView.as_view(),
-        name="autoplay-video-list"),
+    url(r'^(?P<application_slug>\w+)/categories/(?P<category_id>\d+)/video-youtube-ids/$',
+        VideoYoutubeIDListAPIView.as_view(),
+        name="video-youtube-ids-list"),
 ]
