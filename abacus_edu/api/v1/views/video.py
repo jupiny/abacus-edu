@@ -5,6 +5,7 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView
 from abacus_edu.models import Application, Category, Video
 from api.v1.serializers.video import VideoModelSerializer, VideoYoutubeIDSerializer
 from api.pagination import StandardResultsSetPagination
+from api.mixins import CountResultsResponseMixins
 
 
 class VideoListAPIView(ListAPIView):
@@ -27,7 +28,7 @@ class VideoDetailAPIView(RetrieveAPIView):
         return video
 
 
-class RecommendedVideoListAPIView(ListAPIView):
+class RecommendedVideoListAPIView(CountResultsResponseMixins, ListAPIView):
     serializer_class = VideoModelSerializer
 
     def get_queryset(self):
@@ -35,7 +36,7 @@ class RecommendedVideoListAPIView(ListAPIView):
         return Video.objects.filter(category__application=application, is_recommended=True)
 
 
-class VideoYoutubeIDListAPIView(ListAPIView):
+class VideoYoutubeIDListAPIView(CountResultsResponseMixins, ListAPIView):
     serializer_class = VideoYoutubeIDSerializer
 
     def get_queryset(self):
