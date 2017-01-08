@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.generics import ListCreateAPIView
+from rest_framework.generics import ListCreateAPIView, DestroyAPIView
 
 from abacus_edu.models import Application, Client
 from api.v1.serializers.video import VideoModelSerializer
@@ -22,16 +22,24 @@ class ClientCheckTokenAPIView(APIView):
 class ClientLikeVideoListCreateAPIView(CountResultsResponseMixins, ListCreateAPIView):
     serializer_class = VideoModelSerializer
 
-    def get_queryset(self):
+    def get_client(self):
         token = self.request.META.get('HTTP_CLIENT_TOKEN')
         application = get_object_or_404(Application, slug=self.kwargs.get('application_slug'))
         client = get_object_or_404(Client, token=token)
+        return client
+
+    def get_queryset(self):
+        client = self.get_client()
         return client.like_video_set.all()
 
     def create(self, request, *args, **kwargs):
-        token = self.request.META.get('HTTP_CLIENT_TOKEN')
-        video_ids = request.data.getlist('video_id')
-        application = get_object_or_404(Application, slug=self.kwargs.get('application_slug'))
-        client = get_object_or_404(Client, token=token)
+        client = self.get_client()
+        video_ids = self.request.data.getlist('video_id')
         client.like_video_set.add(*video_ids)
         return Response(status=status.HTTP_201_CREATED)
+
+    def delete(self, request, *args, **kwargs):
+        client = self.get_client()
+        video_ids = self.request.data.getlist('video_id')
+        client.like_video_set.remove(*video_ids)
+        return Response(status=status.HTTP_204_NO_CONTENT)
