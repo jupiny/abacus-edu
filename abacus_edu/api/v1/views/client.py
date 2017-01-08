@@ -7,11 +7,11 @@ from api.v1.serializers.video import VideoModelSerializer
 from api.mixins import CountResultsResponseMixins, ClientModelMixins
 
 
-class ClientCheckTokenAPIView(APIView):
+class ClientCheckTokenAPIView(ClientModelMixins, APIView):
 
     def get(self, request, *args, **kwargs):
         token = request.META.get('HTTP_CLIENT_TOKEN')
-        application = get_object_or_404(Application, slug=kwargs.get('application_slug'))
+        application = self.get_application()
         application.client_set.get_or_create(token=token)
         return Response(status=status.HTTP_200_OK)
 
