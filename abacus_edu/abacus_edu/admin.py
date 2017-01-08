@@ -1,10 +1,7 @@
 from django.contrib import admin
-from django.contrib.auth.models import User
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import User, Group
 
-from .models import Video
-from .models import Category
-from .models import Application
+from .models import Video, Category, Application, Client
 from .filters import DropdownFilter
 
 
@@ -30,9 +27,15 @@ class ApplicationAdmin(admin.ModelAdmin):
     list_display = ('app_name', 'slug',)
     search_fields = ['app_name', ]
 
+
+class ClientAdmin(admin.ModelAdmin):
+    list_display = ('token',)
+    search_fields = ['token', ]
+
 admin.site.unregister(User)
 admin.site.unregister(Group)
 
 admin.site.register(Video, VideoAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Application, ApplicationAdmin)
+admin.site.register(Client, ClientAdmin)
