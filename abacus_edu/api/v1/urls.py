@@ -25,6 +25,6 @@ urlpatterns = [
         ClientCheckTokenAPIView.as_view(),
         name="check-token"),
     url(r'^(?P<application_slug>\w+)/like-videos/$',
-        ClientLikeVideoListAPIView.as_view(),
+        ClientLikeVideoListCreateAPIView.as_view(),
         name="like-video-list"),
 ]
