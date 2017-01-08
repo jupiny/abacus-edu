@@ -31,6 +31,9 @@ class ApplicationAdmin(admin.ModelAdmin):
 class ClientAdmin(admin.ModelAdmin):
     list_display = ('token',)
     search_fields = ['token', ]
+    list_filter = (
+        ('application__app_name', DropdownFilter),
+    )
 
 admin.site.unregister(User)
 admin.site.unregister(Group)
