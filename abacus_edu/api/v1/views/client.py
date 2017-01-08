@@ -1,13 +1,10 @@
-from django.shortcuts import get_object_or_404
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import ListCreateAPIView, DestroyAPIView
 
-from abacus_edu.models import Application, Client
 from api.v1.serializers.video import VideoModelSerializer
-from api.mixins import CountResultsResponseMixins
+from api.mixins import CountResultsResponseMixins, ClientModelMixins
 
 
 class ClientCheckTokenAPIView(APIView):
@@ -19,14 +16,8 @@ class ClientCheckTokenAPIView(APIView):
         return Response(status=status.HTTP_200_OK)
 
 
-class ClientLikeVideoListCreateAPIView(CountResultsResponseMixins, ListCreateAPIView):
+class ClientLikeVideoListCreateAPIView(ClientModelMixins, CountResultsResponseMixins, ListCreateAPIView):
     serializer_class = VideoModelSerializer
-
-    def get_client(self):
-        token = self.request.META.get('HTTP_CLIENT_TOKEN')
-        application = get_object_or_404(Application, slug=self.kwargs.get('application_slug'))
-        client = get_object_or_404(Client, token=token)
-        return client
 
     def get_queryset(self):
         client = self.get_client()
