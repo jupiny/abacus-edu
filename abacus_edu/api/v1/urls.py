@@ -20,8 +20,11 @@ urlpatterns = [
         name="recommended-video-list"),
     url(r'^(?P<application_slug>\w+)/categories/(?P<category_id>\d+)/video-youtube-ids/$',
         VideoYoutubeIDListAPIView.as_view(),
-        name="video-youtube-ids-list"),
+        name="video-youtube-id-list"),
     url(r'^(?P<application_slug>\w+)/check-token/$',
         ClientCheckTokenAPIView.as_view(),
-        name="video-youtube-ids-list"),
+        name="check-token"),
+    url(r'^(?P<application_slug>\w+)/like-videos/$',
+        ClientLikeVideoListAPIView.as_view(),
+        name="like-video-list"),
 ]
