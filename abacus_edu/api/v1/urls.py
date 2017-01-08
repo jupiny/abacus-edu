@@ -2,6 +2,7 @@ from django.conf.urls import url
 
 from .views.category import *
 from .views.video import *
+from .views.client import *
 
 
 urlpatterns = [
@@ -19,5 +20,11 @@ urlpatterns = [
         name="recommended-video-list"),
     url(r'^(?P<application_slug>\w+)/categories/(?P<category_id>\d+)/video-youtube-ids/$',
         VideoYoutubeIDListAPIView.as_view(),
-        name="video-youtube-ids-list"),
+        name="video-youtube-id-list"),
+    url(r'^(?P<application_slug>\w+)/check-token/$',
+        ClientCheckTokenAPIView.as_view(),
+        name="check-token"),
+    url(r'^(?P<application_slug>\w+)/like-videos/$',
+        ClientLikeVideoListCreateAPIView.as_view(),
+        name="like-video-list"),
 ]
