@@ -1,45 +1,40 @@
-from django.shortcuts import get_object_or_404
-
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 
-from abacus_edu.models import Application, Category, Video
 from api.v1.serializers.video import VideoModelSerializer, VideoYoutubeIDSerializer
 from api.pagination import StandardResultsSetPagination
-from api.mixins import CountResultsResponseMixins
+from api.mixins import CountResultsResponseMixins, ApplicationModelMixins, CategoryModelMixins, VideoModelMixins
+
+from abacus_edu.models import Video
 
 
-class VideoListAPIView(ListAPIView):
+class VideoListAPIView(CategoryModelMixins, ListAPIView):
     serializer_class = VideoModelSerializer
     pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
-        application = get_object_or_404(Application, slug=self.kwargs.get('application_slug'))
-        category = get_object_or_404(Category, pk=self.kwargs.get('category_id'))
+        category = self.get_category()
         return category.video_set.all()
 
 
-class VideoDetailAPIView(RetrieveAPIView):
+class VideoDetailAPIView(VideoModelMixins, RetrieveAPIView):
     serializer_class = VideoModelSerializer
 
     def get_object(self):
-        application = get_object_or_404(Application, slug=self.kwargs.get('application_slug'))
-        category = get_object_or_404(Category, pk=self.kwargs.get('category_id'))
-        video = get_object_or_404(Video, pk=self.kwargs.get('video_id'))
+        video = self.get_video()
         return video
 
 
-class RecommendedVideoListAPIView(CountResultsResponseMixins, ListAPIView):
+class RecommendedVideoListAPIView(ApplicationModelMixins, CountResultsResponseMixins, ListAPIView):
     serializer_class = VideoModelSerializer
 
     def get_queryset(self):
-        application = get_object_or_404(Application, slug=self.kwargs.get('application_slug'))
+        application = self.get_application()
         return Video.objects.filter(category__application=application, is_recommended=True)
 
 
-class VideoYoutubeIDListAPIView(CountResultsResponseMixins, ListAPIView):
+class VideoYoutubeIDListAPIView(CategoryModelMixins, CountResultsResponseMixins, ListAPIView):
     serializer_class = VideoYoutubeIDSerializer
 
     def get_queryset(self):
-        application = get_object_or_404(Application, slug=self.kwargs.get('application_slug'))
-        category = get_object_or_404(Category, pk=self.kwargs.get('category_id'))
+        category = self.get_category()
         return category.video_set.all()

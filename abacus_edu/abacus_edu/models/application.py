@@ -3,6 +3,8 @@ import datetime
 
 from django.db import models
 
+from abacus_edu.behaviors import Timestampable
+
 
 def set_filename_format(filename):
     now = datetime.datetime.now()
@@ -23,7 +25,7 @@ def get_representative_image_path(instance, filename):
     return path
 
 
-class Application(models.Model):
+class Application(Timestampable, models.Model):
     app_name = models.CharField(
         max_length=30,
         verbose_name="어플리케이션 이름",

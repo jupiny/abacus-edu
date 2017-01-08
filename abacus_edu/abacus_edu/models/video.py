@@ -1,8 +1,12 @@
+from datetime import datetime
+
 from django.db import models
 from django.utils.html import format_html
 
+from abacus_edu.behaviors import Timestampable
 
-class Video(models.Model):
+
+class Video(Timestampable, models.Model):
     category = models.ForeignKey(
         'Category',
         on_delete=models.CASCADE,
@@ -26,9 +30,19 @@ class Video(models.Model):
         default=False,
         verbose_name="추천여부",
     )
+    publish_date = models.DateField(
+        blank=True,
+        null=True,
+        verbose_name="등록날짜(이 날짜 순으로 정렬됨. 미입력시 현재 날짜로 자동저장)",
+    )
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.publish_date:
+            self.publish_date = datetime.now()
+        super(Video, self).save(*args, **kwargs)
 
     @property
     def youtube_original_url(self):
@@ -66,3 +80,4 @@ class Video(models.Model):
     class Meta:
         verbose_name = "Video"
         verbose_name_plural = "Video"
+        ordering = ['-publish_date', '-id']
