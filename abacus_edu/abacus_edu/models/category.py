@@ -1,7 +1,9 @@
 from django.db import models
 
+from abacus_edu.behaviors import Timestampable
 
-class Category(models.Model):
+
+class Category(Timestampable, models.Model):
     application = models.ForeignKey(
         'Application',
         on_delete=models.CASCADE,

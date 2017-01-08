@@ -1,8 +1,10 @@
 from django.db import models
 from django.utils.html import format_html
 
+from abacus_edu.behaviors import Timestampable
 
-class Video(models.Model):
+
+class Video(Timestampable, models.Model):
     category = models.ForeignKey(
         'Category',
         on_delete=models.CASCADE,
