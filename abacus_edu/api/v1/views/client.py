@@ -39,7 +39,8 @@ class ClientLikeVideoListCreateAPIView(ClientModelMixins, CountResultsResponseMi
         video_ids = map(lambda x: int(x), video_ids)
         cur_like_video_ids = client.like_video_set.values_list('id', flat=True)
         new_video_ids = list(set(video_ids)-set(cur_like_video_ids))
-        client.like_video_set.add(*new_video_ids)
+        if new_video_ids:
+            client.like_video_set.add(*new_video_ids)
         return Response(status=status.HTTP_201_CREATED)
 
     def delete(self, request, *args, **kwargs):
