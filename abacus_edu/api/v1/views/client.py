@@ -16,6 +16,16 @@ class ClientCheckTokenAPIView(ClientModelMixins, APIView):
         return Response(status=status.HTTP_200_OK)
 
 
+class ClientRenewTokenAPIView(ClientModelMixins, APIView):
+
+    def get(self, request, *args, **kwargs):
+        new_token = request.META.get('HTTP_NEW_CLIENT_TOKEN')
+        client = self.get_client()
+        client.token = new_token
+        client.save()
+        return Response(status=status.HTTP_200_OK)
+
+
 class ClientLikeVideoListCreateAPIView(ClientModelMixins, CountResultsResponseMixins, ListCreateAPIView):
     serializer_class = VideoModelSerializer
 
