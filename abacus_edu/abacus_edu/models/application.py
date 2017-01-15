@@ -55,4 +55,6 @@ class Application(Timestampable, models.Model):
 
     @property
     def representative_image_url(self):
-        return self.representative_image.url
+        if representative_image:
+            return self.representative_image.url
+        return ''
