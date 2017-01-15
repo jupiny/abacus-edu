@@ -49,3 +49,7 @@ class Application(Timestampable, models.Model):
     class Meta:
         verbose_name = "Application"
         verbose_name_plural = "Application"
+
+    @property
+    def representative_image_url(self):
+        return self.representative_image.url
