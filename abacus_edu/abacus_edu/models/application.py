@@ -41,6 +41,7 @@ class Application(Timestampable, models.Model):
         blank=True,
         verbose_name="대표 이미지 (유튜브 영상이 링크가 안 될때 보여주는 이미지)",
     )
+    description = models.TextField(blank=True)
 
     def __str__(self):
         return self.app_name
@@ -48,3 +49,7 @@ class Application(Timestampable, models.Model):
     class Meta:
         verbose_name = "Application"
         verbose_name_plural = "Application"
+
+    @property
+    def representative_image_url(self):
+        return self.representative_image.url

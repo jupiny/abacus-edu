@@ -1,11 +1,15 @@
 from django.conf.urls import url
 
+from .views.application import *
 from .views.category import *
 from .views.video import *
 from .views.client import *
 
 
 urlpatterns = [
+    url(r'^(?P<application_slug>\w+)/$',
+        ApplicationDetailAPIView.as_view(),
+        name="application-detail"),
     url(r'^(?P<application_slug>\w+)/categories/$',
         CategoryListAPIView.as_view(),
         name="category-list"),

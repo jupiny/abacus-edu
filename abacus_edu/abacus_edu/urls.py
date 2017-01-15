@@ -20,10 +20,15 @@ from django.conf.urls.static import static
 
 from rest_framework_jwt.views import obtain_jwt_token
 
+from .views.push_notification import push_notification
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/v1/', include('api.v1.urls', namespace='api')),
+
+    # Push Notification Through FCM
+    url(r'^push/', push_notification, name="push-notification"),
 
     # Obtain JWT Token
     url(r'^api-token-auth/', obtain_jwt_token),

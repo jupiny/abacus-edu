@@ -1,0 +1,39 @@
+{% extends "admin/change_form.html" %}
+{% load staticfiles %}
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static "css/application.css" %}">
+{% endblock %}
+{% block content %}
+{{ block.super }}
+<form action="{% url "push-notification" %}" method="POST">
+  {% csrf_token %}
+  <fieldset class="module aligned ">
+    <div class="form-row">
+      <div>
+        <label class>푸쉬 메시지 알림 발송</label>
+        <input type="hidden" name="topic" value="{{ original.slug }}">
+        <textarea name="message" rows="2" cols="70" placeholder="발송할 메시지 입력"></textarea>
+        <button id="push" class="button">발송</button>
+      </div>
+    </div>
+  </fieldset>
+</form>
+{% endblock %}
+{% block admin_change_form_document_ready %}
+{{ block.super }}
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $("#push").click(function() {
+    alert('발송되었습니다.');
+    try {
+        $("form")[1].submit();
+    } catch(e) {}
+  });
+});
+</script>
+{% endblock %}

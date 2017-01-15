@@ -6,3 +6,4 @@ djangorestframework==3.5.3
 djangorestframework-jwt==1.9.0
 gunicorn==19.6.0
 honcho==0.7.1
+pyfcm==1.2.1
